@@ -4,13 +4,22 @@
  * https://github.com/marcj/css-element-queries/blob/master/LICENSE.
  */
 ;
-(function() {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['ResizeSensor'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory(require('ResizeSensor'));
+    } else {
+        root.ElementQueries = factory(ResizeSensor);
+    }
+}(this, function(ResizeSensor){
+
     /**
      *
      * @type {Function}
      * @constructor
      */
-    var ElementQueries = this.ElementQueries = function() {
+    var ElementQueries = function() {
 
         this.withTracking = false;
         var elements = [];
@@ -357,4 +366,6 @@
     }
     domLoaded(ElementQueries.init);
 
-})();
+    return ElementQueries;
+
+}));
