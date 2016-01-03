@@ -4,7 +4,15 @@
  * https://github.com/marcj/css-element-queries/blob/master/LICENSE.
  */
 ;
-(function() {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        root.ResizeSensor = factory();
+    }
+}(this, function(){
 
     /**
      * Class for dimension change detection.
@@ -14,7 +22,7 @@
      *
      * @constructor
      */
-    this.ResizeSensor = function(element, callback) {
+    function ResizeSensor(element, callback) {
         /**
          *
          * @constructor
@@ -155,7 +163,7 @@
         };
     };
 
-    this.ResizeSensor.detach = function(element) {
+    ResizeSensor.detach = function(element) {
         if (element.resizeSensor) {
             element.removeChild(element.resizeSensor);
             delete element.resizeSensor;
@@ -163,4 +171,6 @@
         }
     };
 
-})();
+    return ResizeSensor;
+
+}));
